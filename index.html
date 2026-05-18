@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,8 +21,11 @@
   <ul class="nav-links">
     <li><a href="#programs">Programs</a></li>
     <li><a href="https://hackclub.com/slack" target="_blank">Slack</a></li>
-    
   </ul>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+    <span class="icon" id="theme-icon">☀️</span>
+    <span id="theme-label">Light</span>
+  </button>
 </nav>
 
 <section class="hero">
@@ -38,12 +41,17 @@
 
 <div class="section-row" id="programs">
   <h2>Programs</h2>
-  <span class="badge badge-live">● 2 active</span>
+  <span class="badge badge-live" id="active-count">● 0 active</span>
 </div>
 
 <div class="cards">
+    <div class="filters">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="live">Live</button>
+    <button class="filter-btn" data-filter="soon">Coming Soon</button>
+  </div>
 
-  <div class="card card-locked">
+  <div class="card card-locked soon">
     <span class="card-emoji">🔒</span>
     <h3 class="card-title">Coming Soon</h3>
     <p class="card-desc">Something's brewing. Keep an eye on <a href="https://hackclub.enterprise.slack.com/archives/C0ALHGAASLV" target="_blank" style="color: #ec3750;"><strong>#pull-quests</strong></a> on Slack for updates!</p>
@@ -52,7 +60,7 @@
     </div>
   </div>
 
-  <div class="card card-locked">
+  <div class="card card-locked soon">
     <span class="card-emoji">🔒</span>
     <h3 class="card-title">Coming Soon</h3>
     <p class="card-desc">Something's brewing. Keep an eye on <a href="https://hackclub.enterprise.slack.com/archives/C0ALHGAASLV" target="_blank" style="color: #ec3750;"><strong>#pull-quests</strong></a> on Slack for updates!</p>
@@ -61,7 +69,7 @@
     </div>
   </div>
 
-  <a href="https://frankensite.hackclub.com/" class="card card-link card-franken">
+  <a href="https://frankensite.hackclub.com/" class="card card-link card-franken live">
     <pre class="ascii-logo">___________                     __                   _________.__  __          
 \_   _____/___________    ____ |  | __ ____   ____  /   _____/|__|/  |_  ____  
  |    __) \_  __ \__  \  /    \|  |/ // __ \ /    \ \_____  \ |  \   __\/ __ \ 
@@ -70,21 +78,21 @@
      \/               \/     \/     \/    \/     \/        \/               \/</pre>
     <p class="card-desc">The Frankensite is a disaster. A beautiful, broken disaster. Submit PRs with your club and make it worse. Or better. Honestly, who's to say.</p>
     <div class="card-foot">
-      <span class="badge badge-live">● Live</span>
+      <span class="badge badge-live badge-live-program">● Live</span>
       <span class="arrow arrow-orange">↗</span>
     </div>
   </a>
 
-  <a href="https://fix.hackclub.com/" class="card card-link card-fix">
+  <a href="https://fix.hackclub.com/" class="card card-link card-fix live">
     <h3 class="card-title"><span class="fix-filled">Fix</span><span class="fix-outline"> Hack Club</span></h3>
     <p class="card-desc">Submit PRs to improve Hack Club's infra. Fix CSS, add pages to YSWS programs, or anything else approved by the program managers!</p>
     <div class="card-foot">
-      <span class="badge badge-live">● Live</span>
+      <span class="badge badge-live badge-live-program">● Live</span>
       <span class="arrow arrow-yellow">↗</span>
     </div>
   </a>
 
-  <div class="card card-locked">
+  <div class="card card-locked soon">
     <span class="card-emoji">🔒</span>
     <h3 class="card-title">Coming Soon</h3>
     <p class="card-desc">Something's brewing. Keep an eye on <a href="https://hackclub.enterprise.slack.com/archives/C0ALHGAASLV" target="_blank" style="color: #ec3750;"><strong>#pull-quests</strong></a> on Slack for updates!</p>
@@ -106,6 +114,49 @@
     </span>
   </div>
 </footer>
+<script>
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.cards .card');
+ 
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      cards.forEach(card => {
+        if (f === 'all') {
+          card.classList.remove('hidden');
+        } else if (f === 'live') {
+          card.classList.toggle('hidden', !card.classList.contains('live'));
+        } else if (f === 'soon') {
+          card.classList.toggle('hidden', !card.classList.contains('soon'));
+        }
+      });
+    });
+  });
+ 
+  const html = document.documentElement;
+  const toggleBtn = document.getElementById('theme-toggle');
+  const themeIcon = document.getElementById('theme-icon');
+  const themeLabel = document.getElementById('theme-label');
+ 
+  toggleBtn.addEventListener('click', () => {
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    themeIcon.textContent = isDark ? '🌙' : '☀️';
+    themeLabel.textContent = isDark ? 'Dark' : 'Light';
+  });
+    function updateProgramCount() {
+    const activePrograms = document.querySelectorAll('.badge-live-program').length;
+    const counter = document.getElementById('active-count');
+
+    if (counter) {
+      counter.textContent = `● ${activePrograms} active`;
+    }
+  }
+
+  updateProgramCount();
+</script>
 
 </body>
 </html>
