@@ -2,7 +2,6 @@
 A series of activities for Clubs, all centered around practicing pull requests. 
 
 ### Add a Program
-- 
 ```
 <a href="https://example.com" class="card card-link live/soon">
   <h3 class="card-title">Program Name</h3>
@@ -15,5 +14,6 @@ A series of activities for Clubs, all centered around practicing pull requests.
   </div>
 </a>
 ```
-- if the program is unrealesed for the badge 
-```<span class="badge badge-soon">Unreleased</span>
+- if the program is unrealesed for the badge
+
+```<span class="badge badge-soon">Unreleased</span>```
