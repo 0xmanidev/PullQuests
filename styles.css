@@ -114,7 +114,34 @@ body {
   box-shadow: 0 1px 2px rgba(0,0,0,.0625), 0 8px 12px rgba(0,0,0,.125) !important;
   transform: scale(1.0625);
 }
+.sponsor-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 24px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--color-muted);
+}
 
+.sponsor-text::before {
+  content: "❤";
+  color: #ec3750;
+  font-size: 13px;
+}
+
+.sponsor-text a {
+  color: #ec3750;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.sponsor-text a:hover {
+  color: #ff5c74;
+  text-decoration-style: wavy;
+}
 /* ── Theme toggle ── */
 .theme-toggle {
   background: var(--bg-filter);
